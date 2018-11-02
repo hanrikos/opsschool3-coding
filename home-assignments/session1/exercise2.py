@@ -1,6 +1,8 @@
 import json
 import requests
 import json2html
+from json2html import *
+import csv
 
 
 LOCATION_BY_IP_API = 'http://ip-api.com/json'
@@ -22,28 +24,42 @@ def create_weather_report(api_url):
     response = requests.get(api_url)
     json_data = response.json()
     print(json_data)
-    print
 
     country_str = json_data["sys"]["country"]
     city_str = json_data["name"]
     description_str = json_data["weather"][0]["main"]
     temperature_str = json_data["main"]["temp"]
 
-
+    #print to single txt file
     with open("{}special_weather_report_of_{}.txt".format(OUTPUT_DIRECTORY, city_str), "w") as text_file:
         print("The weather in {}, {} is {} and the temperature is {} F".format(city_str, country_str, description_str, temperature_str), file=text_file)
 
-    json_page = json2html.convert(json=json_data)
-    html_file = open("{}full_weather_report".format(OUTPUT_DIRECTORY), "w")
-    html_file.write(json_page)
+    #print to full html file
+    jsonPage = json2html.convert(json=json_data)
+    html_file = open("{}full_special_weather_report_of_{}.html".format(OUTPUT_DIRECTORY, city_str), "w")
+    html_file.write(jsonPage)
     html_file.close()
 
 
 def create_multiple_weather_report(template_api_url, city_list):
 
-    print("fefe")
-    #WEATHER_API_URL.replace("{city}", city).replace("{country}", country)
-    #print("The weather in {}, {} is {} degrees".format(city_str, country ,temperature_str)
+
+    with open(CITY_LIST, mode='r') as infile:
+        reader = csv.reader(infile)
+        with open('{}city_list_new.csv'.format(OUTPUT_DIRECTORY), mode='w') as outfile:
+            writer = csv.writer(outfile)
+            mydict = {rows[0]: rows[1] for rows in reader}
+
+        for key, value in mydict.items():
+            new_api_url = WEATHER_API_URL.replace("{city}", key).replace("{country}", value)
+            response = requests.get(new_api_url)
+            json_data = response.json()
+
+            # country_str = json_data["sys"]["country"]
+            city_str = json_data["name"]
+            temperature_str = json_data["main"]["temp"]
+            print("The weather in {}, {} is {} degrees".format(city_str, value, temperature_str))
+
 
 def main():
 
