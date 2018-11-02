@@ -29,13 +29,13 @@ def group_by_age(json_content):
     out_of_ranges = []  # out of range
 
     for key, value in d.items():
-        if 11 <= value <= 20:
+        if 11 < value < 20:
             range_one.append(key)
-        if 20 <= value <= 25:
+        if 20 < value < 25:
             range_two.append(key)
-        if 25 <= value <= 40:
+        if 25 < value < 40:
             range_three.append(key)
-        if 40 <= value <= 102:
+        if 40 < value < 102:
             range_four.append(key)
         else:
             out_of_ranges.append(key)
@@ -54,7 +54,7 @@ def append_multiple_jsons(range_one, range_two, range_three, range_four, out_of_
     output_list["40 to 102"] = range_four
     output_list["Out of range"] = out_of_ranges
 
-    with open("{}output_file.json".format(OUTPUT_DIRECTORY), "w") as outfile:
+    with open("{}output_file.yaml".format(OUTPUT_DIRECTORY), "w") as outfile:
         json.dump(output_list, outfile)
     print(output_list)
 
