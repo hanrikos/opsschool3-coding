@@ -2,8 +2,8 @@ import json
 from collections import defaultdict
 
 
-INPUT_JSON_PATH = "/home/hans/opsschool/opsschool3-coding/home-assignments/input_file.json"
-OUTPUT_DIRECTORY = "/home/hans/opsschool/opsschool3-coding/home-assignments/"
+INPUT_JSON_PATH = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/input_file.json"
+OUTPUT_DIRECTORY = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/"
 
 def load_json_file(json_file):
     """

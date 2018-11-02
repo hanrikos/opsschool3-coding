@@ -6,9 +6,9 @@ import csv
 
 
 LOCATION_BY_IP_API = 'http://ip-api.com/json'
-OUTPUT_DIRECTORY = "/home/hans/opsschool/opsschool3-coding/home-assignments/"
+OUTPUT_DIRECTORY = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/"
 WEATHER_API_URL = 'http://api.openweathermap.org/data/2.5/weather?q={city},{country}&APPID=9c8b160816fc48b0288a6136e0989b2a'
-CITY_LIST = "/home/hans/opsschool/opsschool3-coding/home-assignments/city_list.csv"
+CITY_LIST = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/city_list.csv"
 
 
 def check_current_location(location_url):
