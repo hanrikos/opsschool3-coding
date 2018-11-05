@@ -1,7 +1,8 @@
 import json
 import yaml
+import sys
 
-INPUT_JSON_PATH = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/input_file.json"
+# INPUT_JSON_PATH = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/input_file.json"
 OUTPUT_DIRECTORY = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/"
 
 
@@ -82,9 +83,9 @@ def create_yaml_based_on_bucket_ranges(ages_dict, dynamic_bucket_list, min_bucke
     print(output_list)
 
 
-def main():
+def main(filename):
     print("loading the json file")
-    json_content = load_json_file(INPUT_JSON_PATH)
+    json_content = load_json_file(filename)
     print("Getting people by ages and bucket ranges")
     ages_dict, dynamic_bucket_list, min_bucket, max_bucket = get_ages_and_bucket_ranges(json_content)
     print("Creating yaml file with the info")
@@ -92,4 +93,7 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if len(sys.argv) != 2:
+        print(f"Please add file path arg: {sys.argv[0]} <data_file_name>")
+    else:
+        main(sys.argv[1])
