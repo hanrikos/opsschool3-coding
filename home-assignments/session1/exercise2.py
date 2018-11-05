@@ -7,7 +7,7 @@ import csv
 
 LOCATION_BY_IP_API = 'http://ip-api.com/json'
 OUTPUT_DIRECTORY = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/"
-WEATHER_API_URL = 'http://api.openweathermap.org/data/2.5/weather?q={city},{country}&APPID=9c8b160816fc48b0288a6136e0989b2a'
+WEATHER_API_URL = 'http://api.openweathermap.org/data/2.5/weather?q={city},{country}&APPID=9c8b160816fc48b0288a6136e0989b2a&units=metric'
 CITY_LIST = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/city_list.csv"
 
 
@@ -19,6 +19,7 @@ def check_current_location(location_url):
     print(json_data)
     print(city + " , " + country)
     return city, country
+
 
 def create_weather_report(api_url):
     response = requests.get(api_url)
@@ -32,7 +33,7 @@ def create_weather_report(api_url):
 
     #print to single txt file
     with open("{}special_weather_report_of_{}.txt".format(OUTPUT_DIRECTORY, city_str), "w") as text_file:
-        print("The weather in {}, {} is {} and the temperature is {} F".format(city_str, country_str, description_str, temperature_str), file=text_file)
+        print("The weather in {}, {} is {} and the temperature is {} °C".format(city_str, country_str, description_str, temperature_str), file=text_file)
 
     #print to full html file
     jsonPage = json2html.convert(json=json_data)
@@ -47,7 +48,7 @@ def create_multiple_weather_report(template_api_url, city_list):
     with open(CITY_LIST, mode='r') as infile:
         reader = csv.reader(infile)
         with open('{}city_list_new.csv'.format(OUTPUT_DIRECTORY), mode='w') as outfile:
-            writer = csv.writer(outfile)
+            # writer = csv.writer(outfile)
             mydict = {rows[0]: rows[1] for rows in reader}
 
         for key, value in mydict.items():
@@ -58,7 +59,7 @@ def create_multiple_weather_report(template_api_url, city_list):
             # country_str = json_data["sys"]["country"]
             city_str = json_data["name"]
             temperature_str = json_data["main"]["temp"]
-            print("The weather in {}, {} is {} degrees".format(city_str, value, temperature_str))
+            print("The weather in {}, {} is {} °C degrees".format(city_str, value, temperature_str))
 
 
 def main():
