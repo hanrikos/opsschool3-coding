@@ -59,11 +59,9 @@ def create_multiple_weather_report(template_api_url, city_list):
     """
     with open(city_list, mode='r') as infile:
         reader = csv.reader(infile)
-        with open('{}city_list_new.csv'.format(OUTPUT_DIRECTORY), mode='w') as outfile:
-            # writer = csv.writer(outfile)
-            mydict = {rows[0]: rows[1] for rows in reader}
+        my_dict = {rows[0]: rows[1] for rows in reader}
 
-        for key, value in mydict.items():
+        for key, value in my_dict.items():
             new_api_url = template_api_url.replace("{city}", key).replace("{country}", value)
             response = requests.get(new_api_url)
             json_data = response.json()
