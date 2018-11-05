@@ -78,7 +78,7 @@ def create_yaml_based_on_bucket_ranges(ages_dict, dynamic_bucket_list, min_bucke
                         append_key_into_output(output_list, key1, out_list_name)
 
     with open("{}output_file.yaml".format(OUTPUT_DIRECTORY), "w") as outfile:
-        yaml.dump(output_list, outfile)
+        yaml.dump(output_list, outfile, allow_unicode=True)
     print(output_list)
 
 
