@@ -1,6 +1,8 @@
+from __future__ import division
 import json
 import yaml
 import sys
+
 
 # INPUT_JSON_PATH = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/input_file.json"
 OUTPUT_DIRECTORY = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/"
@@ -26,20 +28,18 @@ def get_ages_and_bucket_ranges(json_content):
     :return: list of people grouped by their ages
     """
     #  people age list
-    d = json_content["ppl_ages"]
-    sorted_by_value = sorted(d.items(), key=lambda kv: kv[1])
-    last_age = sorted_by_value[-1]
+    ages_data = json_content["ppl_ages"]
+    oldest_age = max(ages_data.values())
 
     #  sorted bucket list
-    b = json_content["buckets"]
-    b.append(last_age[1])
-    b = [int(x) for x in b]
-    b.sort()
+    bucket_data = json_content["buckets"]
+    bucket_data.append(oldest_age)
+    bucket_data.sort()
 
-    dynamic_bucket_list = list(zip(b, b[1:]))
-    min_bucket = b[0]
-    max_bucket = b[-1]
-    ages_dict = d
+    dynamic_bucket_list = list(zip(bucket_data, bucket_data[1:]))
+    min_bucket = min(bucket_data)
+    max_bucket = max(bucket_data)
+    ages_dict = ages_data
 
     return ages_dict, dynamic_bucket_list, min_bucket, max_bucket
 
