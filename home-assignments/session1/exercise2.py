@@ -10,13 +10,18 @@ WEATHER_API_URL = 'http://api.openweathermap.org/data/2.5/weather?q={city},{coun
 CITY_LIST = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/city_list.csv"
 
 
+def request_json_from_api(api_url):
+    response = requests.get(api_url)
+    json_data = response.json()
+    return json_data
+
 def check_current_location(location_url):
     """
     :param location_url: Location detection api url
     :return: the location of the device that the script is running
     """
-    response = requests.get(location_url)
-    json_data = response.json()
+    json_data = request_json_from_api(location_url)
+
     city = json_data["city"]
     country = json_data["country"]
     print(json_data)
@@ -31,9 +36,7 @@ def create_weather_report(api_url, country):
     :return: creates a txt file with the weather report of specific city
     also creates an html file with full weather info page
     """
-    response = requests.get(api_url)
-    json_data = response.json()
-    print(json_data)
+    json_data = request_json_from_api(api_url)
 
     # country_str = json_data["sys"]["country"]
     city_str = json_data["name"]
@@ -63,8 +66,7 @@ def create_multiple_weather_report(template_api_url, city_list):
 
         for key, value in my_dict.items():
             new_api_url = template_api_url.replace("{city}", key).replace("{country}", value)
-            response = requests.get(new_api_url)
-            json_data = response.json()
+            json_data = request_json_from_api(new_api_url)
 
             # country_str = json_data["sys"]["country"]
             city_str = json_data["name"]
