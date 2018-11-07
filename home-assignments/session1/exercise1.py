@@ -1,11 +1,11 @@
 from __future__ import division
 import json
-import yaml
 import sys
-
-
-# INPUT_JSON_PATH = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/input_file.json"
-OUTPUT_DIRECTORY = "/home/hans/opsschool/opsschool3-coding/home-assignments/session1/"
+import os.path
+try:
+    import yaml
+except ImportError as e:
+    print("{} : Please install yaml module: pip install pyyaml".format(e))
 
 
 def load_json_file(json_file):
@@ -27,11 +27,9 @@ def get_ages_and_bucket_ranges(json_content):
     :param json_content: json_content
     :return: list of people grouped by their ages
     """
-    #  people age list
     ages_data = json_content["ppl_ages"]
     oldest_age = max(ages_data.values())
 
-    #  sorted bucket list
     bucket_data = json_content["buckets"]
     bucket_data.append(oldest_age)
     bucket_data.sort()
@@ -52,7 +50,7 @@ def append_key_into_output(output_list, key, output_list_name):
         print(e)
 
 
-def create_yaml_based_on_bucket_ranges(ages_dict, dynamic_bucket_list, min_bucket, max_bucket):
+def create_yaml_based_on_bucket_ranges(ages_dict, dynamic_bucket_list, min_bucket, max_bucket, filename):
     """
     :return: A new yaml file with people grouped by dynamic buckets
     """
@@ -78,18 +76,20 @@ def create_yaml_based_on_bucket_ranges(ages_dict, dynamic_bucket_list, min_bucke
                         output_list[out_list_name] = []
                         append_key_into_output(output_list, key1, out_list_name)
 
-    with open("{}output_file.yaml".format(OUTPUT_DIRECTORY), "w") as outfile:
+    with open("{}.yaml".format(filename), "w") as outfile:
         yaml.dump(output_list, outfile, allow_unicode=True)
     print(output_list)
 
 
 def main(filename):
-    print("loading the json file")
+    """
+    Please install yaml module before running the script
+    Command: pip install pyyaml
+    """
     json_content = load_json_file(filename)
-    print("Getting people by ages and bucket ranges")
     ages_dict, dynamic_bucket_list, min_bucket, max_bucket = get_ages_and_bucket_ranges(json_content)
-    print("Creating yaml file with the info")
-    create_yaml_based_on_bucket_ranges(ages_dict, dynamic_bucket_list, min_bucket, max_bucket)
+    short_file_name = os.path.splitext(filename)[0]
+    create_yaml_based_on_bucket_ranges(ages_dict, dynamic_bucket_list, min_bucket, max_bucket, short_file_name)
 
 
 if __name__ == "__main__":
