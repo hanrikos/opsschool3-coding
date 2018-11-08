@@ -11,7 +11,7 @@ def main(city_name):
     min_temperature = forecasts[0].low
     forecast_date = forecasts[0].date
 
-    print("The weather in {} today({}) is {} with temperatures trailing from {}-{} celsius.".format(city_name, forecast_date, weather_condition, min_temperature, max_temperature))
+    print(f"The weather in {city_name} today({forecast_date}) is {weather_condition} with temperatures trailing from {min_temperature}-{max_temperature} celsius.")
 
 
 if __name__ == "__main__":
