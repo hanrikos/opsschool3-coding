@@ -1,6 +1,7 @@
 import click
 import sys
 from weather import Weather, Unit
+import datetime
 
 
 def convert_to_int(s):
@@ -11,6 +12,10 @@ def convert_to_int(s):
     return ret
 
 
+def convert_date_format(date):
+    converted_date = datetime.datetime.strptime(date, "%d %b %Y").strftime("%d/%m/%Y")
+    return converted_date
+
 def create_report(location, number_of_days, city, temperature_unit, multiple):
 
     forecasts = location.forecast[number_of_days]
@@ -18,7 +23,7 @@ def create_report(location, number_of_days, city, temperature_unit, multiple):
     max_temperature = forecasts.high
     min_temperature = forecasts.low
     if multiple:
-        forecast_date = forecasts.date
+        forecast_date = convert_date_format(forecasts.date)
         print(f"{forecast_date} {weather_condition} with temperatures trailing "
               f"from {min_temperature}-{max_temperature} "
               f"{temperature_unit}")
