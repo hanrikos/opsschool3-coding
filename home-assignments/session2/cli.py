@@ -16,6 +16,7 @@ def convert_date_format(date):
     converted_date = datetime.datetime.strptime(date, "%d %b %Y").strftime("%d/%m/%Y")
     return converted_date
 
+
 def create_report(location, number_of_days, city, temperature_unit, multiple):
 
     forecasts = location.forecast[number_of_days]
