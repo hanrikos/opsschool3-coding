@@ -7,7 +7,7 @@ node ('ami-0e04fcf3327b27349'){
     }
     stage('RunScript'){
       sh '''#!/bin/bash
-      cd home-assignments/session2
+      cd workspace/new_pipeline/home-assignments/session2
       python3 cli.py --city dublin --forecast TODAY+3 -
       '''
     }
