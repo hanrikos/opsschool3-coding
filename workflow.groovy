@@ -9,7 +9,7 @@ node ('ami-0e04fcf3327b27349'){
       sh '''#!/bin/bash
       pwd
       cd ~/workspace/new_pipeline/home-assignments/session2
-      python3 cli.py --city dublin --forecast TODAY+3 -
+      python3 cli.py --city dublin --forecast TODAY+3 -c
       '''
     }
 }
